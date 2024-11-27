@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор веса портфеля</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 400px; margin: auto; }
+        input { display: block; margin: 10px 0; padding: 8px; width: 100%; }
+        button { padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор веса портфеля</h1>
+        <label for="weight">Введите массу тела ребенка (в кг):</label>
+        <input type="number" id="weight" placeholder="Например, 30" required>
+
+        <label for="backpackWeight">Введите вес портфеля (в кг):</label>
+        <input type="number" id="backpackWeight" placeholder="Например, 4" required>
+
+        <button onclick="calculate()">Проверить</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const bodyWeight = parseFloat(document.getElementById("weight").value);
+            const backpackWeight = parseFloat(document.getElementById("backpackWeight").value);
+
+            if (isNaN(bodyWeight) || isNaN(backpackWeight) || bodyWeight <= 0 || backpackWeight <= 0) {
+                document.getElementById("result").textContent = "Пожалуйста, введите корректные данные.";
+                return;
+            }
+
+            const maxWeight = bodyWeight * 0.15; // Норма: 15% от массы тела
+            const resultText = backpackWeight <= maxWeight 
+                ? `Вес портфеля в норме! Максимальный допустимый вес: ${maxWeight.toFixed(1)} кг.` 
+                : `Внимание! Портфель слишком тяжелый. Максимальный вес: ${maxWeight.toFixed(1)} кг, а ваш портфель весит ${backpackWeight.toFixed(1)} кг.`;
+
+            document.getElementById("result").textContent = resultText;
+        }
+    </script>
+</body>
+</html>
